@@ -155,3 +155,11 @@ If you want to start everything from scratch there is a way to prune your docker
 ```
 $ docker system prune -a --volumes
 ```
+
+## Generate curated-dataset schema
+
+It will be generated based on the `dataset` schema (re-writing existent `curated-dataset` schema).
+
+```
+$ python scripts/create_curated_dataset_schema.py
+```
