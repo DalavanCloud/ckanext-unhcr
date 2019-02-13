@@ -15,7 +15,11 @@
      {% endif %}
   {% else %}
       {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
-        {% snippet 'snippets/add_dataset_buttons.html', group=c.group_dict.id%}
+        {% if c.group_dict.name == 'curation-data-container' %}
+          {% link_for _('Deposit Dataset'), named_route='/curated-dataset/new', class_='btn btn-primary', icon='plus-square', group=c.group_dict.id %}
+        {% else %}
+          {% snippet 'snippets/add_dataset_buttons.html', group=c.group_dict.id%}
+        {% endif %}
       {% endif %}
   {% endif %}
 {% endblock %}
