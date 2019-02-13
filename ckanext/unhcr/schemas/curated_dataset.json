@@ -26,7 +26,7 @@
         {
             "form_placeholder": "Some useful notes about the data", 
             "form_snippet": "markdown.html", 
-            "required": true, 
+            "required": false, 
             "field_name": "notes", 
             "label": "Description"
         }, 
@@ -54,12 +54,19 @@
             "display_property": "foaf:homepage"
         }, 
         {
-            "required": false, 
-            "form_snippet": "owner_org.html", 
+            "display_snippet": null, 
+            "required": true, 
+            "form_snippet": null, 
             "label": "Organization", 
             "preset": "dataset_organization", 
-            "validators": "validate_curation_data_container", 
             "field_name": "owner_org"
+        }, 
+        {
+            "form_snippet": "owner_org_dest.html", 
+            "required": true, 
+            "validators": "owner_org_validator unicode", 
+            "field_name": "owner_org_dest", 
+            "label": "Organization"
         }, 
         {
             "required": false, 
@@ -669,12 +676,6 @@
             "label": "DDI", 
             "help_text": "Determines if a dataset was imported from a DDI XML file", 
             "field_name": "ddi"
-        }, 
-        {
-            "form_snippet": "owner_org.html", 
-            "preset": "dataset_organization", 
-            "field_name": "owner_org_dest", 
-            "label": "Target Organization"
         }
     ], 
     "resource_fields": [

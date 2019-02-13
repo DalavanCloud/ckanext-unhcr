@@ -18,21 +18,26 @@ def generate_curated_dataset_schema():
 
     # Remove required flags
     for field in schema['dataset_fields'] + schema['resource_fields']:
-        if field['field_name'] not in ['title', 'notes', 'type']:
+        if field['field_name'] not in ['title', 'type']:
             field['required'] = False
 
-    # Update `owner_ord`
-    for field in schema['dataset_fields']:
+    # Handle organization fields
+    for index, field in enumerate(list(schema['dataset_fields'])):
         if field['field_name'] == 'owner_org':
-            field['validators'] = 'validate_curation_data_container'
 
-    # Add `owner_ord_dest`
-    schema['dataset_fields'].append({
-        'field_name': 'owner_org_dest',
-        'label': 'Target Organization',
-        'preset': 'dataset_organization',
-        'form_snippet': 'owner_org.html',
-    })
+            # owner_org
+            field['form_snippet'] = None
+            field['display_snippet'] = None
+            field['required'] = True
+
+            # owner_org_dest
+            schema['dataset_fields'].insert(index + 1, {
+                'field_name': 'owner_org_dest',
+                'label': 'Organization',
+                'form_snippet': 'owner_org_dest.html',
+                'validators': 'owner_org_validator unicode',
+                'required': True,
+            })
 
     # Write `curated-dataset` schema tweaking order
     with open(OUTPUT_JSON, 'w') as file:

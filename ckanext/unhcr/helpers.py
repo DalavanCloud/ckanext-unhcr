@@ -108,3 +108,8 @@ def get_linked_datasets_for_display(value, context=None):
         datasets.append({'text': dataset['title'], 'href': href})
 
     return datasets
+
+
+def get_curation_data_container():
+    NAME = 'curation-data-container'
+    return toolkit.get_action('organization_show')({'model': model}, {'id': NAME})

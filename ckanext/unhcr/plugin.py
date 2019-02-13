@@ -82,6 +82,7 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'page_authorized': helpers.page_authorized,
             'get_linked_datasets_for_form': helpers.get_linked_datasets_for_form,
             'get_linked_datasets_for_display': helpers.get_linked_datasets_for_display,
+            'get_curation_data_container': helpers.get_curation_data_container,
         }
 
     # IPackageController
