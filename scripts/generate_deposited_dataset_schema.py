@@ -35,6 +35,7 @@ def generate_deposited_dataset_schema():
                 'field_name': 'owner_org_dest',
                 'label': 'Organization',
                 'form_snippet': 'owner_org_dest.html',
+                'display_snippet': 'owner_org_dest.html',
                 'validators': 'owner_org_validator unicode',
                 'required': True,
             })

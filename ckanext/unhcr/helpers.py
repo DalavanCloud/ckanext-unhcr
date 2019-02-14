@@ -110,6 +110,10 @@ def get_linked_datasets_for_display(value, context=None):
     return datasets
 
 
+def get_data_container(id):
+    return toolkit.get_action('organization_show')({'model': model}, {'id': id})
+
+
 def get_data_deposit_container():
     NAME = 'data-deposit'
-    return toolkit.get_action('organization_show')({'model': model}, {'id': NAME})
+    return get_data_container(NAME)

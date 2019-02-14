@@ -62,11 +62,12 @@
             "field_name": "owner_org"
         }, 
         {
-            "form_snippet": "owner_org_dest.html", 
+            "display_snippet": "owner_org_dest.html", 
             "required": true, 
+            "form_snippet": "owner_org_dest.html", 
+            "label": "Organization", 
             "validators": "owner_org_validator unicode", 
-            "field_name": "owner_org_dest", 
-            "label": "Organization"
+            "field_name": "owner_org_dest"
         }, 
         {
             "required": false, 
