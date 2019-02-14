@@ -40,16 +40,16 @@
 
 <div data-module="dataset-visibility">
 
-  {% set curation_data_container = h.get_curation_data_container() %}
+  {% set data_deposit_container = h.get_data_deposit_container() %}
 
-  {% set organizations_available=h.organizations_available('create_dataset') | rejectattr('id', 'equalto', curation_data_container.id) %}
+  {% set organizations_available=h.organizations_available('create_dataset') | rejectattr('id', 'equalto', data_deposit_container.id) %}
   {% set org_required=not h.check_config_permission('create_unowned_dataset') or h.scheming_field_required(field) %}
 
   {% call _organization() %}
     {%- snippet 'scheming/form_snippets/help_text.html', field=field %}
   {% endcall %}
 
-  <input type="hidden" name="owner_org" value="{{ curation_data_container.id }}">
+  <input type="hidden" name="owner_org" value="{{ data_deposit_container.id }}">
 
   {% block package_metadata_fields_visibility %}
     <div class="control-group form-group control-medium">

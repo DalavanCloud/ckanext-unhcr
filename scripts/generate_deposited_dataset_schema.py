@@ -5,16 +5,16 @@ from collections import OrderedDict
 # Module API
 
 INPUT_JSON = 'ckanext/unhcr/schemas/dataset.json'
-OUTPUT_JSON = 'ckanext/unhcr/schemas/curated_dataset.json'
+OUTPUT_JSON = 'ckanext/unhcr/schemas/deposited_dataset.json'
 
-def generate_curated_dataset_schema():
+def generate_deposited_dataset_schema():
 
     # Read `dataset` schema
     with open(INPUT_JSON) as file:
         schema = OrderedDict(json.load(file))
 
     # Update dataset type
-    schema['dataset_type'] = 'curated-dataset'
+    schema['dataset_type'] = 'deposited-dataset'
 
     # Remove required flags
     for field in schema['dataset_fields'] + schema['resource_fields']:
@@ -39,16 +39,16 @@ def generate_curated_dataset_schema():
                 'required': True,
             })
 
-    # Write `curated-dataset` schema tweaking order
+    # Write `deposited-dataset` schema tweaking order
     with open(OUTPUT_JSON, 'w') as file:
         schema['dataset_fields'] = schema.pop('dataset_fields')
         schema['resource_fields'] = schema.pop('resource_fields')
         json.dump(schema, file, indent=4)
 
-    print('Schema for the `curated-dataset` type has been generated')
+    print('Schema for the `deposited-dataset` type has been generated')
 
 
 # Main script
 
 if __name__ == '__main__':
-    generate_curated_dataset_schema()
+    generate_deposited_dataset_schema()

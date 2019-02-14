@@ -1,7 +1,7 @@
 {
     "about": "CKAN dataset schema customized for the UN HCR RIDL project", 
     "scheming_version": 1, 
-    "dataset_type": "curated-dataset", 
+    "dataset_type": "deposited-dataset", 
     "about_url": "http://github.com/okfn/ckanext-unhcr", 
     "dataset_fields": [
         {
