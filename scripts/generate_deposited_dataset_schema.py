@@ -28,15 +28,16 @@ def generate_deposited_dataset_schema():
             # owner_org
             field['form_snippet'] = None
             field['display_snippet'] = None
+            field['validators'] = 'owner_org_validator deposited_dataset_owner_org'
             field['required'] = True
 
             # owner_org_dest
             schema['dataset_fields'].insert(index + 1, {
                 'field_name': 'owner_org_dest',
-                'label': 'Organization',
+                'label': 'Data Container',
                 'form_snippet': 'owner_org_dest.html',
                 'display_snippet': 'owner_org_dest.html',
-                'validators': 'owner_org_validator unicode',
+                'validators': 'owner_org_validator deposited_dataset_owner_org_dest',
                 'required': True,
             })
 

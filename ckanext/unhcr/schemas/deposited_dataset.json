@@ -59,14 +59,15 @@
             "form_snippet": null, 
             "label": "Organization", 
             "preset": "dataset_organization", 
+            "validators": "owner_org_validator deposited_dataset_owner_org", 
             "field_name": "owner_org"
         }, 
         {
             "display_snippet": "owner_org_dest.html", 
             "required": true, 
             "form_snippet": "owner_org_dest.html", 
-            "label": "Organization", 
-            "validators": "owner_org_validator unicode", 
+            "label": "Data Container", 
+            "validators": "owner_org_validator deposited_dataset_owner_org_dest", 
             "field_name": "owner_org_dest"
         }, 
         {

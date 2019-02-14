@@ -179,4 +179,6 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ignore_if_attachment': validators.ignore_if_attachment,
             'linked_datasets_validator': validators.linked_datasets,
             'unhcr_choices': validators.unhcr_choices,
+            'deposited_dataset_owner_org': validators.deposited_dataset_owner_org,
+            'deposited_dataset_owner_org_dest': validators.deposited_dataset_owner_org_dest,
         }

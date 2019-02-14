@@ -3,8 +3,7 @@ from ckan.plugins import toolkit
 from ckan.plugins.toolkit import Invalid, missing, get_validator, _
 from ckanext.scheming.validation import scheming_validator
 from ckanext.scheming import helpers as sh
-from ckanext.unhcr.helpers import get_linked_datasets_for_form
-from ckanext.unhcr import utils
+from ckanext.unhcr import helpers, utils
 log = logging.getLogger(__name__)
 
 OneOf = get_validator('OneOf')
@@ -61,6 +60,22 @@ value please contact the site administrators.
     return validator
 
 
+def deposited_dataset_owner_org(value, context):
+    # We have to ensure that it's the data container for depositing
+    data_container_for_depositing = helpers.get_data_container_for_depositing()
+    if value != data_container_for_depositing['id']:
+        raise Invalid('Invalid data container')
+    return value
+
+
+def deposited_dataset_owner_org_dest(value, context):
+    # We have to ensure that it's NOT the data container for depositing
+    data_container_for_depositing = helpers.get_data_container_for_depositing()
+    if value == data_container_for_depositing['id']:
+        raise Invalid('Invalid data container')
+    return value
+
+
 # Internal
 
 def _is_attachment(index, data):
@@ -78,7 +93,7 @@ def _is_attachment(index, data):
 # preparing function to use here and in the helpers
 def _get_allowed_linked_datasets():
     datasets = []
-    for container in get_linked_datasets_for_form():
+    for container in helpers.get_linked_datasets_for_form():
         for dataset in container['children']:
             datasets.append(dataset['value'])
     return datasets

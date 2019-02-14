@@ -110,10 +110,12 @@ def get_linked_datasets_for_display(value, context=None):
     return datasets
 
 
+# TODO: handle ObjectNotFound?
 def get_data_container(id):
     return toolkit.get_action('organization_show')({'model': model}, {'id': id})
 
 
+# TODO: handle ObjectNotFound?
 def get_data_container_for_depositing():
     NAME = 'data-deposit'
     return get_data_container(NAME)
