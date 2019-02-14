@@ -114,6 +114,6 @@ def get_data_container(id):
     return toolkit.get_action('organization_show')({'model': model}, {'id': id})
 
 
-def get_data_deposit_container():
+def get_data_container_for_depositing():
     NAME = 'data-deposit'
     return get_data_container(NAME)

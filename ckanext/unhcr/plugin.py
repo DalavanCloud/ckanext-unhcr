@@ -83,7 +83,7 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_linked_datasets_for_form': helpers.get_linked_datasets_for_form,
             'get_linked_datasets_for_display': helpers.get_linked_datasets_for_display,
             'get_data_container': helpers.get_data_container,
-            'get_data_deposit_container': helpers.get_data_deposit_container,
+            'get_data_container_for_depositing': helpers.get_data_container_for_depositing,
         }
 
     # IPackageController
