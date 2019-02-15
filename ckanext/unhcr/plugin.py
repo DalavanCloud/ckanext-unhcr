@@ -36,7 +36,7 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IRoutes
 
     def before_map(self, _map):
-        controller = 'ckanext.unhcr.controllers:DataContainer'
+        controller = 'ckanext.unhcr.controllers.data_container:DataContainerController'
         _map.connect('/data-container/{id}/approve',
                      controller=controller,
                      action='approve')
