@@ -1,5 +1,23 @@
 {% ckan_extends %}
-  {% block package_resources %}
-    {% snippet "package/snippets/resources_list.html", pkg=pkg, type='data' %}
-    {% snippet "package/snippets/resources_list.html", pkg=pkg, type='attachment' %}
-  {% endblock %}
+
+{% block page_primary_action %}
+  {% if pkg.type == 'deposited-dataset' %}
+    <div class="alert alert-warning" role="alert">
+      <p>{% trans %}This dataset is waiting for a curator approval{% endtrans %}</p>
+    </div>
+    {% if h.check_access('sysadmin') %}
+      <a href="/deposited-dataset/{{ pkg.id }}/approve" class="btn btn-primary">
+        {% trans %}Approve Dataset{% endtrans %}
+      </a>
+      <a href="/deposited-dataset/{{ pkg.id }}/reject" class="btn btn-danger">
+        {% trans %}Reject Dataset{% endtrans %}
+      </a>
+    {% endif %}
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+{% block package_resources %}
+  {% snippet "package/snippets/resources_list.html", pkg=pkg, type='data' %}
+  {% snippet "package/snippets/resources_list.html", pkg=pkg, type='attachment' %}
+{% endblock %}
