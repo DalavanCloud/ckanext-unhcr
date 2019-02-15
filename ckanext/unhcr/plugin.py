@@ -36,13 +36,16 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IRoutes
 
     def before_map(self, _map):
+
+        # data container
         controller = 'ckanext.unhcr.controllers.data_container:DataContainerController'
-        _map.connect('/data-container/{id}/approve',
-                     controller=controller,
-                     action='approve')
-        _map.connect('/data-container/{id}/reject',
-                     controller=controller,
-                     action='reject')
+        _map.connect('/data-container/{id}/approve', controller=controller, action='approve')
+        _map.connect('/data-container/{id}/reject', controller=controller, action='reject')
+
+        # deposited dataset
+        controller = 'ckanext.unhcr.controllers.deposited_dataset:DepositedDatasetController'
+        _map.connect('/deposited-dataset/{id}/approve', controller=controller, action='approve')
+        _map.connect('/deposited-dataset/{id}/reject', controller=controller, action='reject')
 
         return _map
 

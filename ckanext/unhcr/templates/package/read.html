@@ -6,6 +6,8 @@
       <p>{% trans %}This dataset is waiting for a curator approval{% endtrans %}</p>
     </div>
     {% if h.check_access('sysadmin') %}
+      {# TODO: move to editing form %}
+      {# TODO: show approve only if dataset is valid or show validation errors #}
       <a href="/deposited-dataset/{{ pkg.id }}/approve" class="btn btn-primary">
         {% trans %}Approve Dataset{% endtrans %}
       </a>
