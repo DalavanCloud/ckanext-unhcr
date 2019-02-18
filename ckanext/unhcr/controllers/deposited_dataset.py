@@ -6,6 +6,7 @@ import ckan.logic.action.get as get_core
 import ckan.logic.action.update as update_core
 import ckan.logic.action.delete as delete_core
 from ckanext.unhcr.mailer import mail_data_container_update_to_user
+from ckanext.unhcr import helpers
 log = logging.getLogger(__name__)
 
 
@@ -18,14 +19,12 @@ class DepositedDatasetController(toolkit.BaseController):
         pkg_dict = get_core.package_show({'model': model}, {'id': id})
 
         # Change to regural dataset
-        pkg_dict['type'] = 'dataset'
-        pkg_dict['owner_org'] = pkg_dict['owner_org_dest']
-        del pkg_dict['owner_org_dest']
+        pkg_dict = helpers.convert_deposited_dataset_to_regular_dataset(pkg_dict)
 
         # Update package
         # TODO: Validation errors are impossible here for normal flow
         # We also set type in context to allow type switching by ckan patch
-        context = {'model': model, 'user': toolkit.c.user, 'type': 'dataset'}
+        context = {'model': model, 'user': toolkit.c.user, 'type': pkg_dict['type']}
         pkg_dict = update_core.package_update(context, pkg_dict)
 
         # Send approval email

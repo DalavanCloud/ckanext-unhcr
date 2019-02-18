@@ -1,6 +1,8 @@
 import logging
 from ckan import model
+from ckan.logic import ValidationError
 from ckan.plugins import toolkit
+import ckan.lib.plugins as lib_plugins
 from ckanext.unhcr import utils
 log = logging.getLogger(__name__)
 
@@ -119,3 +121,22 @@ def get_data_container(id):
 def get_data_container_for_depositing():
     NAME = 'data-deposit'
     return get_data_container(NAME)
+
+
+def get_dataset_validation_error_or_none(pkg_dict):
+    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    if pkg_dict.get('type') == 'deposited-dataset':
+        pkg_dict = convert_deposited_dataset_to_regular_dataset(pkg_dict)
+    package_plugin = lib_plugins.lookup_package_plugin('dataset')
+    schema = package_plugin.update_package_schema()
+    data, errors = lib_plugins.plugin_validate(
+        package_plugin, context, pkg_dict, schema, 'package_update')
+    return ValidationError(errors) if errors else None
+
+
+def convert_deposited_dataset_to_regular_dataset(pkg_dict):
+    pkg_dict = pkg_dict.copy()
+    pkg_dict['type'] = 'dataset'
+    pkg_dict['owner_org'] = pkg_dict['owner_org_dest']
+    del pkg_dict['owner_org_dest']
+    return pkg_dict
