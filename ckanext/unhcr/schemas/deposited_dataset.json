@@ -516,7 +516,6 @@
         }, 
         {
             "form_placeholder": "eg. National coverage, or name of the area, etc.", 
-            "required": false, 
             "field_name": "geog_coverage", 
             "label": "Geographic Coverage"
         }, 
@@ -682,7 +681,7 @@
     ], 
     "resource_fields": [
         {
-            "required": true, 
+            "required": false, 
             "form_snippet": "resource_type.html", 
             "choices": [
                 {
