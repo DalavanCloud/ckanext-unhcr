@@ -121,9 +121,16 @@ def package_create(context, data_dict):
 
 def package_update(context, data_dict):
 
-    # For data deposit container
+    # Get package id
+    package_id = None
     if data_dict:
-        pack = toolkit.get_action('package_show')({}, {'id': data_dict['id']})
+        package_id = data_dict['id']
+    if context.get('package'):
+        package_id = context['package'].id
+
+    # For data deposit container
+    if package_id:
+        pack = toolkit.get_action('package_show')({}, {'id': package_id})
         depo = helpers.get_data_container_for_depositing()
         if (toolkit.c.userobj.id == pack.get('creator_user_id') and
             depo['id'] == pack.get('owner_org')):
