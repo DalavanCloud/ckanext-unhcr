@@ -42,7 +42,7 @@
 
   {% set data_container_for_depositing = h.get_data_container_for_depositing() %}
 
-  {% set organizations_available=h.organizations_available('create_dataset') | rejectattr('id', 'equalto', data_container_for_depositing.id) %}
+  {% set organizations_available=h.get_all_data_containers(exclude_ids=[data_container_for_depositing.id]) %}
   {% set org_required=not h.check_config_permission('create_unowned_dataset') or h.scheming_field_required(field) %}
 
   {% call _organization() %}

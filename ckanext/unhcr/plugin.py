@@ -90,6 +90,7 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation, DefaultPermission
             'get_data_container': helpers.get_data_container,
             'get_data_container_for_depositing': helpers.get_data_container_for_depositing,
             'get_dataset_validation_error_or_none': helpers.get_dataset_validation_error_or_none,
+            'get_all_data_containers': helpers.get_all_data_containers,
         }
 
     # IPackageController

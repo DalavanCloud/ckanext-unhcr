@@ -142,3 +142,15 @@ def convert_deposited_dataset_to_regular_dataset(pkg_dict):
     pkg_dict['owner_org'] = pkg_dict['owner_org_dest']
     del pkg_dict['owner_org_dest']
     return pkg_dict
+
+
+def get_all_data_containers(exclude_ids=[]):
+    data_containers = []
+    context = {'model': model, 'ignore_auth': True}
+    depo = get_data_container_for_depositing()
+    orgs = toolkit.get_action('organization_list')(context,
+        {'type': 'data-container', 'all_fields': True})
+    for org in orgs:
+        if org['id'] not in exclude_ids:
+            data_containers.append(org)
+    return data_containers
