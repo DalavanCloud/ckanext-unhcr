@@ -114,13 +114,15 @@ def get_linked_datasets_for_display(value, context=None):
 
 # TODO: handle ObjectNotFound?
 def get_data_container(id):
-    return toolkit.get_action('organization_show')({'model': model}, {'id': id})
+    context = {'model': model}
+    return toolkit.get_action('organization_show')(context, {'id': id})
 
 
 # TODO: handle ObjectNotFound?
 def get_data_container_for_depositing():
     NAME = 'data-deposit'
-    return get_data_container(NAME)
+    context = {'model': model, 'ignore_auth': True}
+    return toolkit.get_action('organization_show')(context, {'id': NAME})
 
 
 def get_dataset_validation_error_or_none(pkg_dict):

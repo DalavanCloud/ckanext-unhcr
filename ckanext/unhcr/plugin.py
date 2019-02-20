@@ -4,6 +4,7 @@ import logging
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
+from ckan.lib.plugins import DefaultPermissionLabels
 
 from ckanext.unhcr import actions, auth, helpers, jobs, validators
 
@@ -14,7 +15,7 @@ log = logging.getLogger(__name__)
 _ = toolkit._
 
 
-class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
+class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation, DefaultPermissionLabels):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IFacets)
@@ -25,6 +26,7 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IValidators)
+    plugins.implements(plugins.IPermissionLabels)
 
     # IConfigurer
 
@@ -186,3 +188,37 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'deposited_dataset_owner_org': validators.deposited_dataset_owner_org,
             'deposited_dataset_owner_org_dest': validators.deposited_dataset_owner_org_dest,
         }
+
+    def get_dataset_labels(self, dataset_obj):
+        # https://github.com/ckan/ckan/blob/master/ckanext/example_ipermissionlabels/plugin.py
+
+        # For deposited datasets
+        if dataset_obj.type == 'deposited-dataset':
+            log.debug(dataset_obj.owner_org)
+            labels = [
+                'deposited-dataset',
+                'creator-%s' % dataset_obj.creator_user_id,
+            ]
+
+        # For normal datasets
+        else:
+            labels = super(UnhcrPlugin, self).get_dataset_labels(dataset_obj)
+
+        return labels
+
+    def get_user_dataset_labels(self, user_obj):
+        # https://github.com/ckan/ckan/blob/master/ckanext/example_ipermissionlabels/plugin.py
+
+        # For normal users
+        labels = super(UnhcrPlugin, self).get_user_dataset_labels(user_obj)
+
+        # For curating users
+        if user_obj:
+            context = {u'user': user_obj.id}
+            depo = helpers.get_data_container_for_depositing()
+            orgs = toolkit.get_action('organization_list_for_user')(context, {})
+            for org in orgs:
+                if depo['id'] == org['id']:
+                    labels.extend(['deposited-dataset'])
+
+        return labels
