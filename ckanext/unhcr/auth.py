@@ -113,13 +113,10 @@ def package_create(context, data_dict):
     if data_dict:
         depo = helpers.get_data_container_for_depositing()
         if depo['id'] == data_dict.get('owner_org'):
-            result = {'success': True}
+            return {'success': True}
 
     # For normal container
-    else:
-        result = auth_create_core.package_create(context, data_dict)
-
-    return result
+    return auth_create_core.package_create(context, data_dict)
 
 
 def package_update(context, data_dict):
@@ -130,10 +127,7 @@ def package_update(context, data_dict):
         depo = helpers.get_data_container_for_depositing()
         if (toolkit.c.userobj.id == pack.get('creator_user_id') and
             depo['id'] == pack.get('owner_org')):
-                result = {'success': True}
+                return {'success': True}
 
     # For normal container
-    else:
-        result = auth_update_core.package_update(context, data_dict)
-
-    return result
+    return auth_update_core.package_update(context, data_dict)
