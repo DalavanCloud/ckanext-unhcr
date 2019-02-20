@@ -14,6 +14,12 @@ def render_tree(top_nodes=None):
         top_nodes = toolkit.get_action('group_tree')(
             context,
             data_dict={'type': 'data-container'})
+
+    # Remove data deposit
+    # TODO: better way ot remove data deposit from search/tree?
+    depo = get_data_container_for_depositing()
+    top_nodes = filter(lambda node: node['id'] != depo['id'], top_nodes)
+
     return _render_tree(top_nodes)
 
 
