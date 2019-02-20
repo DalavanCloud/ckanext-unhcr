@@ -1,7 +1,7 @@
 import logging
 from ckan import model
 import ckan.plugins.toolkit as toolkit
-import ckan.lib.plugins as lib_plugins
+import ckan.lib.helpers as lib_helpers
 import ckan.logic.action.get as get_core
 import ckan.logic.action.update as update_core
 import ckan.logic.action.delete as delete_core
@@ -52,12 +52,16 @@ class DepositedDatasetController(toolkit.BaseController):
 
 
 def _raise_not_authz_or_not_deposited(id):
-
-    # TODO: allow to curators either
-    # Check auth with toolkit.check_access
-    toolkit.check_access('sysadmin', {'model': model, 'user': toolkit.c.user})
+    depo = helpers.get_data_container_for_depositing()
 
     # Check dataset exists and it's deposited
     pkg_dict = get_core.package_show({'model': model}, {'id': id})
-    if pkg_dict.get('type') != 'deposited-dataset':
-        raise toolkit.ObjectNotFound('Deposited dataset "{}" not found'.format(id))
+    if pkg_dict.get('owner_org') == depo['id']:
+        raise toolkit.ObjectNotFound('Deposited dataset "%s" not found' % id)
+
+    # Check the user is sysadmin or data curator
+    granted = lib_helpers.check_access('sysadmin')
+    if not granted:
+        granted = lib_helpers.user_in_org_or_group(depo['id'])
+    if not granted:
+        raise toolkit.ObjectNotFound('Deposited dataset "%s" is forbidden' % id)
