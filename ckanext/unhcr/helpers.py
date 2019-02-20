@@ -133,6 +133,7 @@ def get_dataset_validation_error_or_none(pkg_dict):
     schema = package_plugin.update_package_schema()
     data, errors = lib_plugins.plugin_validate(
         package_plugin, context, pkg_dict, schema, 'package_update')
+    errors.pop('owner_org')
     return ValidationError(errors) if errors else None
 
 
