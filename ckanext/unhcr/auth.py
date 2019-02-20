@@ -124,7 +124,16 @@ def package_create(context, data_dict):
 
 def package_update(context, data_dict):
 
+    # For data deposit container
+    if data_dict:
+        pack = toolkit.get_action('package_show')({}, {'id': data_dict['id']})
+        depo = helpers.get_data_container_for_depositing()
+        if (toolkit.c.userobj.id == pack.get('creator_user_id') and
+            depo['id'] == pack.get('owner_org')):
+                result = {'success': True}
+
     # For normal container
-    result = auth_update_core.package_update(context, data_dict)
+    else:
+        result = auth_update_core.package_update(context, data_dict)
 
     return result

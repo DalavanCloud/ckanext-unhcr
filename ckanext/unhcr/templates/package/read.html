@@ -6,6 +6,7 @@
     <div class="alert alert-warning" role="alert">
       <p>{% trans %}This dataset is waiting for a curator approval{% endtrans %}</p>
     </div>
+    {# TODO: show for data curators also #}
     {% if h.check_access('sysadmin') %}
       {% set validation_error = h.get_dataset_validation_error_or_none(pkg) %}
       {% if not validation_error %}
