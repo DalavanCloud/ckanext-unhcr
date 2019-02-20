@@ -39,6 +39,11 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation, DefaultPermission
 
     def before_map(self, _map):
 
+        # header
+        # TODO: review header item creation
+        controller = 'ckan.controllers.organization:OrganizationController'
+        _map.connect('data-deposit', '/data-container/data-deposit', controller=controller, action='read', id='data-deposit')
+
         # data container
         controller = 'ckanext.unhcr.controllers.data_container:DataContainerController'
         _map.connect('/data-container/{id}/approve', controller=controller, action='approve')
