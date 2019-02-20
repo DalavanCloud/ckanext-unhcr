@@ -61,19 +61,26 @@ value please contact the site administrators.
 
 
 def deposited_dataset_owner_org(value, context):
-    # We have to ensure that it's the data container for depositing
+
+    # Pass validation if data container exists and for depositing
     data_container_for_depositing = helpers.get_data_container_for_depositing()
-    if value != data_container_for_depositing['id']:
-        raise Invalid('Invalid data container')
-    return value
+    if value == data_container_for_depositing['id']:
+        return value
+
+    raise Invalid('Invalid data deposit')
+
 
 
 def deposited_dataset_owner_org_dest(value, context):
-    # We have to ensure that it's NOT the data container for depositing
-    data_container_for_depositing = helpers.get_data_container_for_depositing()
-    if value == data_container_for_depositing['id']:
-        raise Invalid('Invalid data container')
-    return value
+
+    # Pass validation if data container exists and NOT for depositing
+    depo = helpers.get_data_container_for_depositing()
+    orgs = helpers.get_all_data_containers(exclude_ids=[depo['id']])
+    for org in orgs:
+        if value == org['id']:
+            return value
+
+    raise Invalid('Invalid data container')
 
 
 # Internal

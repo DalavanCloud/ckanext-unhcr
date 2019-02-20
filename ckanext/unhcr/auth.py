@@ -109,7 +109,6 @@ def organization_create(context, data_dict):
 
 def package_create(context, data_dict):
 
-    # TODO: data_dict could be missing so we can't use this method for form
     # For data deposit container
     if data_dict:
         depo = helpers.get_data_container_for_depositing()

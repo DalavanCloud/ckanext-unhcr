@@ -211,9 +211,11 @@ class UnhcrPlugin(plugins.SingletonPlugin, DefaultTranslation, DefaultPermission
         # https://github.com/ckan/ckan/blob/master/ckanext/example_ipermissionlabels/plugin.py
 
         # For normal users
+        # The label "creator-%s" is here for a package creator
         labels = super(UnhcrPlugin, self).get_user_dataset_labels(user_obj)
 
         # For curating users
+        # Adding "deposited-dataset" label for data curators
         if user_obj:
             context = {u'user': user_obj.id}
             depo = helpers.get_data_container_for_depositing()
