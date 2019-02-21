@@ -7,7 +7,7 @@ class Dataset(factories.Dataset):
     keywords = ['shelter', 'health']
     archived = 'False'
     data_collector = ['acf']
-    data_collection_technique = 'interview'
+    data_collection_technique = 'f2f'
     sampling_procedure = 'nonprobability'
     operational_purpose_of_data = 'cartography'
 

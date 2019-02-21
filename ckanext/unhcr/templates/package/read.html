@@ -7,7 +7,7 @@
       <p>{% trans %}This dataset is waiting for a curator approval{% endtrans %}</p>
     </div>
     {% set data_container_for_depositing = h.get_data_container_for_depositing() %}
-    {% if h.check_access('sysadmin') or h.user_in_org_or_group(data_container_for_depositing['id']) %}
+    {% if h.check_access('sysadmin') or h.user_in_org_or_group(data_container_for_depositing.id) %}
       {% set validation_error = h.get_dataset_validation_error_or_none(pkg) %}
       {% if not validation_error %}
         <a href="/deposited-dataset/{{ pkg.id }}/approve" class="btn btn-primary">

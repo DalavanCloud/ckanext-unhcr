@@ -118,17 +118,19 @@ def get_linked_datasets_for_display(value, context=None):
     return datasets
 
 
-# TODO: handle ObjectNotFound?
 def get_data_container(id):
     context = {'model': model}
     return toolkit.get_action('organization_show')(context, {'id': id})
 
 
-# TODO: handle ObjectNotFound?
 def get_data_container_for_depositing():
     NAME = 'data-deposit'
     context = {'model': model, 'ignore_auth': True}
-    return toolkit.get_action('organization_show')(context, {'id': NAME})
+    try:
+        return toolkit.get_action('organization_show')(context, {'id': NAME})
+    except toolkit.ObjectNotFound:
+        log.error('Data Deposit is not created')
+        return {'id': 'data-deposit'}
 
 
 def get_dataset_validation_error_or_none(pkg_dict):
@@ -154,7 +156,6 @@ def convert_deposited_dataset_to_regular_dataset(pkg_dict):
 def get_all_data_containers(exclude_ids=[]):
     data_containers = []
     context = {'model': model, 'ignore_auth': True}
-    depo = get_data_container_for_depositing()
     orgs = toolkit.get_action('organization_list')(context,
         {'type': 'data-container', 'all_fields': True})
     for org in orgs:

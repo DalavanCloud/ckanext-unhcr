@@ -63,8 +63,8 @@ value please contact the site administrators.
 def deposited_dataset_owner_org(value, context):
 
     # Pass validation if data container exists and for depositing
-    data_container_for_depositing = helpers.get_data_container_for_depositing()
-    if value == data_container_for_depositing['id']:
+    depo = helpers.get_data_container_for_depositing()
+    if value == depo['id']:
         return value
 
     raise Invalid('Invalid data deposit')
