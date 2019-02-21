@@ -161,5 +161,5 @@ $ docker system prune -a --volumes
 It will be generated based on the `dataset` schema (re-writing existent `deposited-dataset` schema).
 
 ```
-$ python scripts/create_deposited_dataset_schema.py
+$ python scripts/generate_deposited_dataset_schema.py
 ```
