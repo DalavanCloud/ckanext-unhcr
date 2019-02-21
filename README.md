@@ -144,16 +144,8 @@ $ docker ps -aq # list all containers
 $ docker stop $(docker ps -aq) # stop all containers
 $ docker rm $(docker ps -aq) # remove all containers
 $ docker rmi $(docker images -q) # remove all images
-```
-
-## Reseting docker
-
-> It will destroy all your projects inside docker!!!
-
-If you want to start everything from scratch there is a way to prune your docker environment:
-
-```
-$ docker system prune -a --volumes
+$ docker system prune -a --volumes # CAUTION: it will purge all docker projects
+$ docker volume rm dockerckan<project>_ckan_storage dockerckan<project>_pg_data # remove project volumes
 ```
 
 ## Generate deposited-dataset schema
@@ -163,3 +155,14 @@ It will be generated based on the `dataset` schema (re-writing existent `deposit
 ```
 $ python scripts/generate_deposited_dataset_schema.py
 ```
+
+## Create test users
+
+To test curation workflow we need users with different roles:
+
+```
+$ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_curator email=curator@example.com password=test -c /srv/app/production.ini
+$ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_user email=user@example.com password=test -c /srv/app/production.ini
+```
+
+Then go to the http://ckan-dev:5000/data-container/members/data-deposit and make `ckan_curator` an editor of the organization.
