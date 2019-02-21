@@ -156,7 +156,7 @@ It will be generated based on the `dataset` schema (re-writing existent `deposit
 $ python scripts/generate_deposited_dataset_schema.py
 ```
 
-## Create test users
+## Create development users
 
 To test curation workflow we need users with different roles:
 
