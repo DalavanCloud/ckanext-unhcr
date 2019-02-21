@@ -162,7 +162,8 @@ To test curation workflow we need users with different roles:
 
 ```
 $ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_curator email=curator@example.com password=test -c /srv/app/production.ini
-$ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_user email=user@example.com password=test -c /srv/app/production.ini
+$ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_user1 email=user1@example.com password=test -c /srv/app/production.ini
+$ docker-compose -f ../../docker-compose.dev.yml exec ckan-dev paster --plugin=ckan user add ckan_user2 email=user2@example.com password=test -c /srv/app/production.ini
 ```
 
 Then go to the http://ckan-dev:5000/data-container/members/data-deposit and make `ckan_curator` an editor of the organization.
